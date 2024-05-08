@@ -4,8 +4,10 @@ const express = require('express');
 const expresshbs = require("express-handlebars");
 // Inicializa o aplicativo Express
 const app = express();
-// Define a porta em que o servidor irá escutar as requisições HTTP
-const porta = 3000;
+// Importando as configurações do arquivo .env
+require("dotenv").config();
+// Define a porta com base no arquivo .env em que o servidor irá escutar as requisições HTTP 
+const porta = process.env.PORT;
 // Importa a conexão com o banco de dados
 const conn = require('./src/config/dbConfig');
 // Configura o middleware para analisar solicitações com o tipo de conteúdo 'application/x-www-form-urlencoded'
