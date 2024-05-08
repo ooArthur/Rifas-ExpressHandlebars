@@ -9,7 +9,7 @@ require("dotenv").config();
 // Define a porta com base no arquivo .env em que o servidor irá escutar as requisições HTTP 
 const porta = process.env.PORT;
 // Importa a conexão com o banco de dados
-const conn = require('./src/config/dbConfig');
+const conn = require('./config/dbConfig');
 // Configura o middleware para analisar solicitações com o tipo de conteúdo 'application/x-www-form-urlencoded'
 app.use(
     express.urlencoded({
@@ -18,11 +18,13 @@ app.use(
 );
 // Configura o middleware para analisar solicitações com o tipo de conteúdo 'application/json'
 app.use(express.json());
+// Define o middleware para servir arquivos estáticos do diretório "public"
+app.use(express.static("public"))
 // Configura o Handlebars como mecanismo de visualização para o Express
 app.engine("handlebars", expresshbs.engine());
 app.set("view engine", "handlebars");
 // Importa as rotas definidas em outro arquivo
-const routes = require('./src/routes/routes');
+const routes = require('./routes/routes');
 // Define o uso das rotas no aplicativo Express
 app.use('/', routes);
 // Conecta ao banco de dados e inicia o servidor
@@ -34,6 +36,6 @@ conn.connect(function (err) {
     }
     // Se a conexão for bem-sucedida, inicia o servidor Express para escutar as requisições na porta especificada
     app.listen(porta, () => {
-        console.log(`Servidor rodando na porta ${porta}`);
+        console.log(`Servidor rodando na porta ${porta}, https://localhost:${porta}`);
     });
 });
