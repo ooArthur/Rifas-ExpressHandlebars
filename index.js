@@ -23,6 +23,8 @@ app.use(express.static("public"))
 // Configura o Handlebars como mecanismo de visualização para o Express
 app.engine("handlebars", expresshbs.engine());
 app.set("view engine", "handlebars");
+// Chama a função de criação de tabelas
+require('./models/dbTables')();
 // Importa as rotas definidas em outro arquivo
 const routes = require('./routes/routes');
 // Define o uso das rotas no aplicativo Express

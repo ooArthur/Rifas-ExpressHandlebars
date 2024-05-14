@@ -1,0 +1,23 @@
+Rifas-ExpressHandlebars
+│── .env
+│── .gitignore
+│── config
+│   └── dbConfig.js
+│── controllers
+│   └── appController.js
+│── index.js
+│── models
+│   └── dbTables.js
+│── package-lock.json
+│── package.json
+│── public
+│   │── css
+│   │   └── style.css
+│   └── images
+│       └── favicon.png
+│── routes
+│   └── routes.js
+└── views
+    │── home.handlebars
+    └── layouts
+        └── main.handlebars

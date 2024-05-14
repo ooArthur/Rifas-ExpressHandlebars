@@ -14,6 +14,8 @@ function conectarBancoDeDados() {
         user: process.env.DB_USER,
         // Obtém a senha do banco de dados a partir das variáveis de ambiente.
         password: process.env.DB_PASS,
+        // Informando à qual banco de dados se conectar a partir das variáveis de ambiente.
+        database: process.env.DB
     });
 
     // Retorna a conexão com o banco de dados.
