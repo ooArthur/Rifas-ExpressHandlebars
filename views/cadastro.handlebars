@@ -3,10 +3,10 @@
         <div class="cadastro-img">
             <img src="images/favicon2.svg" alt="">
         </div>
-        <form action="/cadastro/criar-usuario">
+        <form action="/cadastro/criar-usuario" method="POST">
             <div class="formcadastro-control">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="name" name="nome" required>
+                    <input type="text" class="form-control" id="nome" name="nome" required>
                     <label for="name">Nome Completo</label>
                 </div>
             </div>
@@ -22,13 +22,6 @@
                     <label for="senha">Senha</label>
                 </div>
             </div>
-            <div class="formcadastro-control">
-                <div class="form-group">
-                    <input type="password" class="form-control" id="confirmar-senha" name="confirmSenha"required>
-                    <label for="confirmar-senha">Confirme sua Senha</label>
-                </div>
-            </div>
-
             <button type="submit">Criar conta</button>
 
         </form>
