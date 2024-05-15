@@ -13,11 +13,11 @@ module.exports = function criarTabelas() {
 
         // Criação das tabelas, se não existirem
         const criarTabelaUsuario = `
-            CREATE TABLE IF NOT EXISTS Usuarios (
-                ID INT AUTO_INCREMENT PRIMARY KEY,
-                Nome VARCHAR(100),
-                Email VARCHAR(100),
-                Senha VARCHAR(255) 
+            CREATE TABLE IF NOT EXISTS usuarios (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                nome VARCHAR(100),
+                email VARCHAR(100),
+                senha VARCHAR(255) 
             );
         `;
         conn.query(criarTabelaUsuario, function (err) {
@@ -31,16 +31,16 @@ module.exports = function criarTabelas() {
 
         // Cria a consulta SQL para criar a tabela de Rifas se ela não existir.
         const criarTabelaRifas = `
-            CREATE TABLE IF NOT EXISTS Rifas (
-                ID INT AUTO_INCREMENT PRIMARY KEY,
-                UserID INT,
-                NomeRifa VARCHAR(100),
-                Descricao TEXT,
-                NumMaxBilhetes INT,
-                ValorBilhete DECIMAL(10, 2),
-                DataInicio DATETIME DEFAULT CURRENT_TIMESTAMP,
-                DataTermino DATETIME,
-                FOREIGN KEY (UserID) REFERENCES Usuarios(ID)
+            CREATE TABLE IF NOT EXISTS rifas (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                userID INT,
+                nomeRifa VARCHAR(100),
+                descricao TEXT,
+                numMaxBilhetes INT,
+                valorBilhete DECIMAL(10, 2),
+                dataInicio DATETIME DEFAULT CURRENT_TIMESTAMP,
+                dataTermino DATETIME,
+                FOREIGN KEY (userID) REFERENCES Usuarios(id)
             );
         `;
         // Executa a consulta SQL para criar a tabela de Rifas.
@@ -57,12 +57,12 @@ module.exports = function criarTabelas() {
 
         // Crie a consulta SQL para criar a tabela de Bilhetes se ela não existir.
         const criarTabelaBilhetes = `
-            CREATE TABLE IF NOT EXISTS Bilhetes (
-                ID INT AUTO_INCREMENT PRIMARY KEY,
-                RifaID INT,
-                NumeroBilhete INT,
-                CompradorNome VARCHAR(100),
-                FOREIGN KEY (RifaID) REFERENCES Rifas(ID)
+            CREATE TABLE IF NOT EXISTS bilhetes (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                rifaID INT,
+                numeroBilhete INT,
+                compradorNome VARCHAR(100),
+                FOREIGN KEY (rifaID) REFERENCES Rifas(id)
             );
         `;
         // Executa a consulta SQL para criar a tabela de Bilhetes.
@@ -77,12 +77,12 @@ module.exports = function criarTabelas() {
 
         // Crie a consulta SQL para criar a tabela de ImagensRifa se ela não existir.
         const criarTabelaImagensRifa = `
-            CREATE TABLE IF NOT EXISTS ImagensRifa (
-                ID INT AUTO_INCREMENT PRIMARY KEY,
-                RifaID INT,
-                NomeArquivo VARCHAR(255),
-                DadosImagem BLOB,
-                FOREIGN KEY (RifaID) REFERENCES Rifas(ID)
+            CREATE TABLE IF NOT EXISTS imagensRifa (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                rifaID INT,
+                nomeArquivo VARCHAR(255),
+                dadosImagem BLOB,
+                FOREIGN KEY (rifaID) REFERENCES Rifas(id)
             );
         `;
         // Executa a consulta SQL para criar a tabela de ImagensRifa.
