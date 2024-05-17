@@ -113,8 +113,9 @@
     background-color: transparent;
 }
 
-.form-group input:focus + label,
-.form-group input:valid + label {
+.form-group input:focus+label,
+.form-group input.valid+label,
+.form-group.clicked input+label {
     top: -20px;
     font-size: 14px;
     color: #EF4444;
@@ -162,33 +163,48 @@
 @media screen and (max-width: 768px) {
     .home {
         flex-direction: column;
+        align-items: center;
         text-align: center;
     }
-
+    .home-content,
+    .home .home-img {
+        width: 80%;
+        margin: 3rem 0;
+    }
+    .cadastro-container,
     .home-content {
         width: 80%;
-        margin-bottom: 2rem;
     }
-
-    .home .home-content h1 {
-        font-size: 3rem;
+    .cadastro-container .cadastro-img img {
+        width: 50%;
     }
-
-    .home .home-content button {
-        width: 100%;
-    }
-
     .home .home-img {
         width: 80%;
     }
+    .home .home-content button {
+        width: 70%;
+    }
 }
-
 @media screen and (max-width: 480px) {
     .home .home-content h1 {
         font-size: 2.5rem;
     }
-
     .home .home-content p {
         font-size: 0.9rem;
+    }
+    .home .home-content button {
+        width: 70%;
+        max-width: 200px;
+    }
+    .cadastro-container,
+    .home-content {
+        width: 90%;
+    }
+    .cadastro-container .cadastro-img img {
+        width: 40%;
+    }
+    .home .home-img {
+        width: 90%;
+        margin-bottom: 1rem 0;
     }
 }

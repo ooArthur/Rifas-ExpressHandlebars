@@ -1,0 +1,33 @@
+<h1>Bem-vindo ao Painel</h1>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            alert('Acesso negado. Por favor, faça login.');
+            window.location.href = '/login';
+        } else {
+            fetch('/painel', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Acesso negado');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    document.body.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Erro ao acessar o painel:', error);
+                    alert('Acesso negado. Por favor, faça login.');
+                    window.location.href = '/login';
+                });
+        }
+    });
+</script>

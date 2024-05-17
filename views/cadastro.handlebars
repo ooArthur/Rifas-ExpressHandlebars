@@ -3,28 +3,96 @@
         <div class="cadastro-img">
             <img src="images/favicon2.svg" alt="">
         </div>
-        <form action="/cadastro/criar-usuario" method="POST">
+        <form id="formCadastro">
             <div class="formcadastro-control">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="nome" name="nome" required>
-                    <label for="name">Nome Completo</label>
+                    <input type="text" class="form-control" id="nome" name="nome">
+                    <label for="nome" class="input-label">Nome Completo</label>
                 </div>
             </div>
             <div class="formcadastro-control">
                 <div class="form-group">
-                    <input type="email" class="form-control" id="email" name="email" required>
-                    <label for="email">Endereço de Email</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                    <label for="email" class="input-label">Endereço de Email</label>
                 </div>
             </div>
             <div class="formcadastro-control">
                 <div class="form-group">
-                    <input type="password" class="form-control" id="senha" name="senha" required>
-                    <label for="senha">Senha</label>
+                    <input type="password" class="form-control" id="senha" name="senha">
+                    <label for="senha" class="input-label">Senha</label>
+                </div>
+            </div>
+            <div class="formcadastro-control">
+                <div class="form-group">
+                    <input type="password" class="form-control" id="confirmar-senha" name="confirmSenha">
+                    <label for="confirmar-senha" class="input-label">Confirme sua Senha</label>
                 </div>
             </div>
             <button type="submit">Criar conta</button>
-
         </form>
+        <div id="error-message" style="color: red;"></div>
         <a href="/login">Já tem conta? Faça Login</a>
     </div>
 </section>
+
+<script>
+    document.getElementById('formCadastro').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const nome = document.getElementById('nome').value;
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
+        const confirmSenha = document.getElementById('confirmar-senha').value;
+
+        const formData = {
+            nome: nome,
+            email: email,
+            senha: senha,
+            confirmSenha: confirmSenha
+        };
+
+        const errorMessageElement = document.getElementById('error-message');
+
+        try {
+            const response = await fetch('/cadastro/criar-usuario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error);
+            }
+
+            alert("Usuário criado com sucesso!");
+            // Redirecionar para a página de login
+            window.location.href = '/login';
+        } catch (error) {
+            console.error('Erro:', error);
+            errorMessageElement.textContent = error.message;
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const formGroups = document.querySelectorAll('.form-group');
+
+        formGroups.forEach(formGroup => {
+            const input = formGroup.querySelector('input');
+
+            input.addEventListener('click', function () {
+                formGroup.classList.add('clicked');
+            });
+
+            input.addEventListener('blur', function () {
+                if (this.value.trim() === '') {
+                    formGroup.classList.remove('clicked');
+                }
+            });
+        });
+    });
+
+
+</script>

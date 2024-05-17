@@ -1,9 +1,10 @@
+<!-- login.handlebars -->
 <section class="cadastro">
     <div class="cadastro-container">
         <div class="cadastro-img">
             <img src="images/favicon2.svg" alt="">
         </div>
-        <form action="">
+        <form id="loginForm">
             <div class="formcadastro-control">
                 <div class="form-group">
                     <input type="email" class="form-control" id="email" required>
@@ -16,8 +17,109 @@
                     <label for="senha">Senha</label>
                 </div>
             </div>
+            <div id="errorMessage" style="color: red; display: none;"></div>
             <button type="submit">Login</button>
         </form>
         <a href="/cadastro">Não tem conta? Crie uma!</a>
     </div>
 </section>
+
+<script>
+    // Executa o código quando o conteúdo da página for completamente carregado
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // Seleciona todos os elementos com a classe 'form-group'
+        const formGroups = document.querySelectorAll('.form-group');
+
+        // Para cada elemento 'form-group' encontrado, adiciona eventos ao seu input
+        formGroups.forEach(formGroup => {
+            const input = formGroup.querySelector('input');
+
+            // Adiciona uma classe 'clicked' ao 'form-group' quando o input é clicado
+            input.addEventListener('click', function () {
+                formGroup.classList.add('clicked');
+            });
+
+            // Remove a classe 'clicked' se o input perde o foco e está vazio
+            input.addEventListener('blur', function () {
+                if (this.value.trim() === '') {
+                    formGroup.classList.remove('clicked');
+                }
+            });
+        });
+
+        // Seleciona o formulário de login pelo seu ID
+        const loginForm = document.getElementById('loginForm');
+
+        // Adiciona um evento de submit ao formulário de login
+        loginForm.addEventListener('submit', async function (event) {
+            // Previne o comportamento padrão do submit
+            event.preventDefault();
+
+            // Obtém os valores dos campos de email e senha
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            try {
+                // Envia uma requisição POST para autenticar o usuário
+                const response = await fetch('/login/authUser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, senha })
+                });
+
+                // Obtém a resposta da requisição em formato JSON
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error);
+                }
+
+                // Armazena o token recebido no localStorage
+                localStorage.setItem('token', data.token);
+                
+                // Redireciona o usuário para a página do painel
+                window.location.href = '/painel';
+            } catch (error) {
+                // Em caso de erro, exibe a mensagem de erro
+                console.error('Erro ao fazer login:', error);
+                errorMessage.textContent = error.message;
+                errorMessage.style.display = 'block';
+            }
+        });
+
+        // Função para verificar o acesso ao painel
+        async function checkAccess() {
+            // Obtém o token armazenado no localStorage
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    // Envia uma requisição GET para verificar o acesso ao painel
+                    const response = await fetch('/painel', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    // Se a resposta for bem-sucedida, redireciona para o painel
+                    if (response.ok) {
+                        window.location.href = '/painel';
+                    } else {
+                        throw new Error('Acesso negado');
+                    }
+                } catch (error) {
+                    // Em caso de erro, exibe a mensagem de erro
+                    console.error('Erro ao acessar o painel:', error);
+                }
+            }
+        }
+
+        // Chama a função para verificar o acesso ao painel
+        checkAccess();
+    });
+
+
+</script>

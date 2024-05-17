@@ -4,8 +4,12 @@ Rifas-ExpressHandlebars
 │── config
 │   └── dbConfig.js
 │── controllers
-│   └── appController.js
+│   │── cadastroController.js
+│   │── dashboardController.js
+│   └── loginController.js
 │── index.js
+│── middleware
+│   └── authMiddleware.js
 │── models
 │   └── dbTables.js
 │── package-lock.json
@@ -14,10 +18,15 @@ Rifas-ExpressHandlebars
 │   │── css
 │   │   └── style.css
 │   └── images
-│       └── favicon.png
+│       │── favicon.svg
+│       │── favicon2.svg
+│       └── mockup-iphone.svg
 │── routes
 │   └── routes.js
 └── views
+    │── cadastro.handlebars
     │── home.handlebars
-    └── layouts
-        └── main.handlebars
+    │── layouts
+    │   └── main.handlebars
+    │── login.handlebars
+    └── painel.handlebars
