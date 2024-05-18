@@ -13,14 +13,16 @@
     justify-content: space-between;
     padding: 5%;
     background: #fffffff8;
+    height: 100vh;
 }
 
 .home-content {
-    width: 50%;
+    width: 70%;
 }
 
 .home .home-content h1 {
-    font-size: 4rem;
+    font-size: 5.2vw;
+    margin-bottom: 2vh;
 }
 
 .home .home-content span {
@@ -28,7 +30,7 @@
 }
 
 .home .home-content p {
-    font-size: 1rem;
+    font-size: 1.4vw;
     font-weight: 300;
     margin-top: 0.5rem;
     margin-bottom: 2rem;
