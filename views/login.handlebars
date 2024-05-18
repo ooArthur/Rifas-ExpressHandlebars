@@ -79,7 +79,7 @@
 
                 // Armazena o token recebido no localStorage
                 localStorage.setItem('token', data.token);
-                
+
                 // Redireciona o usuário para a página do painel
                 window.location.href = '/painel';
             } catch (error) {
@@ -94,22 +94,31 @@
         async function checkAccess() {
             // Obtém o token armazenado no localStorage
             const token = localStorage.getItem('token');
+
             if (token) {
                 try {
-                    // Envia uma requisição GET para verificar o acesso ao painel
-                    const response = await fetch('/painel', {
-                        method: 'GET',
+                    const res_ = await fetch('/validaToken', {
+                        method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
-                    });
+                    })
 
-                    // Se a resposta for bem-sucedida, redireciona para o painel
-                    if (response.ok) {
-                        window.location.href = '/painel';
-                    } else {
-                        throw new Error('Acesso negado');
+                    if (res_.status != 403 && res_.status != 500) {
+                        // Envia uma requisição GET para verificar o acesso ao painel
+                        const response = await fetch('/painel', {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
+
+                        // Se a resposta for bem-sucedida, redireciona para o painel
+                        if (response.ok) {
+                            window.location.href = '/painel';
+                        }
                     }
+
                 } catch (error) {
                     // Em caso de erro, exibe a mensagem de erro
                     console.error('Erro ao acessar o painel:', error);

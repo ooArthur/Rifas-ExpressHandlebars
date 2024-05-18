@@ -1,6 +1,12 @@
 <h1>Bem-vindo ao Painel</h1>
+<button onclick="logout()">sair</button>
 
 <script>
+    function logout() {
+        localStorage.setItem("token", "");
+        window.location.href = '/login';
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         const token = localStorage.getItem('token');
 
@@ -8,8 +14,8 @@
             alert('Acesso negado. Por favor, faça login.');
             window.location.href = '/login';
         } else {
-            fetch('/painel', {
-                method: 'GET',
+            fetch('/validaToken', {
+                method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -25,7 +31,6 @@
                 })
                 .catch(error => {
                     console.error('Erro ao acessar o painel:', error);
-                    alert('Acesso negado. Por favor, faça login.');
                     window.location.href = '/login';
                 });
         }

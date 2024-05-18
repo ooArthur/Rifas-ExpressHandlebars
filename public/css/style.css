@@ -9,9 +9,9 @@
 
 .home {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    padding: 3%;
+    padding: 5%;
     background: #fffffff8;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .home .home-img {
-    width: 50%;
+    width: 30%;
 }
 
 .home .home-img img {
