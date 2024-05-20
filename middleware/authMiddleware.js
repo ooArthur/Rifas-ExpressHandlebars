@@ -21,12 +21,6 @@ function authenticateToken(req, res, next) {
             return res.status(403).json({ error: "Token inválido ou expirado" });
         }
 
-        // Verifica se o token fornecido é igual ao token gerado
-        const generatedToken = jwt.sign({ userId: decodedToken.userId }, process.env.JWTSECRET);
-        if (token !== generatedToken) {
-            return res.status(403).json({ error: "Token inválido" });
-        }
-
         // Adiciona as informações do usuário na requisição
         req.user = decodedToken;
         next();

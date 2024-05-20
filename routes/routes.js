@@ -4,11 +4,13 @@ const router = express.Router();
 const authenticateToken = require('../middleware/authMiddleware');
 const cadastroController = require('../controllers/cadastroController');
 const loginController = require('../controllers/loginController');
+const dashboardController = require('../controllers/dashboardController');
+const conn = require('../config/dbConfig');
 
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-function token(req, res){
+function token(req, res) {
     const authHeader = req.headers['authorization'];
     let token;
 
@@ -30,25 +32,14 @@ function token(req, res){
 
         console.log(decodedToken.userId);
 
-        // Verifica se o token fornecido é igual ao token gerado
-        // const generatedToken = jwt.sign({ userId: decodedToken.userId }, process.env.JWTSECRET, { expiresIn: '1h' });
-
-        console.log(token);
-        // console.log(generatedToken);
-
-        /* if (token !== generatedToken) {
-            return res.status(403).json({ error: "Token inválido" });
-        } */
-
-        // Adiciona as informações do usuário na requisição
         req.user = decodedToken;
 
-        return res.status(200);
+        return res.status(200).json({ userId: req.user.userId });
     });
 }
 
 router.post("/validaToken", (req, res) => {
-    token();
+    token(req, res);
 });
 
 router.get("/", (req, res) => {
@@ -65,10 +56,20 @@ router.get("/login", (req, res) => {
 });
 router.post("/login/authUser", loginController.login);
 
-
 router.get("/painel", (req, res) => {
-    res.render("painel");
-});
+    const userId = req.query.userId;
 
+    const sql = `SELECT nome FROM usuarios WHERE id = ?`;
+
+    conn.query(sql, [userId], function (error, data) {
+        if (error) {
+            console.log(error);
+            res.status(500).send('Erro ao obter usuário');
+            return;
+        }
+        const user = data[0];
+        res.render("painel", { user });
+    });
+});
 
 module.exports = router;

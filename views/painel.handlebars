@@ -1,5 +1,6 @@
-<h1>Bem-vindo ao Painel</h1>
-<button onclick="logout()">sair</button>
+<!-- painel.handlebars -->
+<h1>Seja bem-vindo, {{user.nome}}!</h1>
+<button onclick="logout()">Sair</button>
 
 <script>
     function logout() {
@@ -23,6 +24,21 @@
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Acesso negado');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const userId = data.userId;
+                    return fetch(`/painel?userId=${userId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao buscar dados do usuário');
                     }
                     return response.text();
                 })
