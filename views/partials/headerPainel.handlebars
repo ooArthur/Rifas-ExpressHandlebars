@@ -1,0 +1,18 @@
+<header>
+    <div class="logo-img">
+        <img src="images/favicon.svg" alt="">
+    </div>
+
+    <nav>
+        <div class="button-logoutpainel">
+            <button onclick="logout()">Sair da Conta</button>
+        </div>
+    </nav>
+</header>
+
+<script>
+    function logout() {
+        localStorage.setItem("token", "");
+        window.location.href = '/login';
+    }
+</script>

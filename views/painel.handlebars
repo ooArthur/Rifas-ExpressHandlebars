@@ -1,13 +1,15 @@
-<!-- painel.handlebars -->
-<h1>Seja bem-vindo, {{user.nome}}!</h1>
-<button onclick="logout()">Sair</button>
+{{> headerPainel}}
+
+<main class="painel">
+    <div class="user-welcome">
+        <div class="text-welcome">
+            <i class="bi bi-person-circle"></i><h3>Olá, seja bem-vindo(a) {{user.nome}}!</h3>
+        </div>
+    </div>
+
+</main>
 
 <script>
-    function logout() {
-        localStorage.setItem("token", "");
-        window.location.href = '/login';
-    }
-
     document.addEventListener('DOMContentLoaded', function () {
         const token = localStorage.getItem('token');
 

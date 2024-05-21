@@ -37,7 +37,7 @@ module.exports = {
             }
 
             // Gera um token JWT contendo o ID do usuário
-            const token = jwt.sign({ userId: user.id }, process.env.JWTSECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ userId: user.id }, process.env.JWTSECRET, { expiresIn: '6h' });
             
             // Retorna o token JWT como resposta da requisição
             res.status(200).json({ token });
