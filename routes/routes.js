@@ -1,4 +1,3 @@
-// routes/routes.js
 const express = require('express');
 const router = express.Router();
 const authenticateToken = require('../middleware/authMiddleware');
@@ -8,6 +7,8 @@ const conn = require('../config/dbConfig');
 
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+
+const moment = require('moment'); 
 
 function token(req, res) {
     const authHeader = req.headers['authorization'];
@@ -68,8 +69,6 @@ router.get("/painel", (req, res) => {
         }
         const user = data[0];
 
-        const userId = req.query.userId;
-
         // Query para contar o número de rifas criadas pelo usuário
         const queryCountRifas = `SELECT COUNT(*) AS numRifas FROM rifas WHERE userId = ?`;
 
@@ -81,12 +80,22 @@ router.get("/painel", (req, res) => {
             WHERE rifas.userId = ?
         `;
 
-        // Query para listar as rifas ativas
-        // Query para listar as rifas ativas
+        // Query para listar as rifas ativas e contar os números vendidos
         const queryRifasAtivas = `
-            SELECT * 
-            FROM rifas 
-            WHERE userId = ? AND dataTermino > NOW()
+            SELECT r.*, COUNT(b.id) AS numBilhetesVendidos
+            FROM rifas r
+            LEFT JOIN bilhetes b ON r.id = b.rifaId
+            WHERE r.userId = ? AND r.dataTermino > NOW()
+            GROUP BY r.id
+        `;
+
+        // Query para listar as rifas finalizadas
+        const queryRifasFinalizadas = `
+            SELECT r.*, COUNT(b.id) AS numBilhetesVendidos
+            FROM rifas r
+            LEFT JOIN bilhetes b ON r.id = b.rifaId
+            WHERE r.userId = ? AND r.dataTermino <= NOW()
+            GROUP BY r.id
         `;
 
         // Executa as queries
@@ -114,9 +123,33 @@ router.get("/painel", (req, res) => {
                         return res.status(500).send('Erro ao obter dados do painel');
                     }
 
-                    const rifasAtivas = resultsRifasAtivas;
+                    // Formata as datas das rifas ativas
+                    const rifasAtivas = resultsRifasAtivas.map(rifa => {
+                        return {
+                            ...rifa,
+                            dataInicio: moment(rifa.dataInicio).format('DD/MM/YYYY'),
+                            dataTermino: moment(rifa.dataTermino).format('DD/MM/YYYY')
+                        };
+                    });
 
-                    res.render('painel', { user, numRifas, totalArrecadado: totalArrecadadoFormatado, rifasAtivas });
+                    // Consulta para listar as rifas finalizadas
+                    conn.query(queryRifasFinalizadas, [userId], (err, resultsRifasFinalizadas) => {
+                        if (err) {
+                            console.error('Erro ao obter rifas finalizadas:', err);
+                            return res.status(500).send('Erro ao obter dados do painel');
+                        }
+
+                        // Formata as datas das rifas finalizadas
+                        const rifasFinalizadas = resultsRifasFinalizadas.map(rifa => {
+                            return {
+                                ...rifa,
+                                dataInicio: moment(rifa.dataInicio).format('DD/MM/YYYY'),
+                                dataTermino: moment(rifa.dataTermino).format('DD/MM/YYYY')
+                            };
+                        });
+
+                        res.render('painel', { user, numRifas, totalArrecadado: totalArrecadadoFormatado, rifasAtivas, rifasFinalizadas });
+                    });
                 });
             });
         });
