@@ -12,7 +12,7 @@ body {
 
 header {
     width: 100%;
-    background-color: #faf9f9f6; 
+    background-color: #faf9f9f6;
     color: white;
     padding: 1.3rem 10%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
@@ -21,20 +21,23 @@ header {
     align-items: center;
     justify-content: space-between;
 }
-header .logo-img{
+
+header .logo-img {
     width: 50%;
 }
-header .logo-img img{
+
+header .logo-img img {
     filter: drop-shadow(0px 5px 3px #00000010);
 }
 
-header nav a{
+header nav a {
     font-size: 3rem;
     text-decoration: none;
     color: black;
     transition: 0.3s;
 }
-header nav a:hover{
+
+header nav a:hover {
     color: rgb(255, 0, 0);
 }
 
@@ -225,8 +228,78 @@ header nav a:hover{
     border: 1px solid transparent;
     border-radius: 0.5rem;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 300;
     cursor: pointer;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5vh;
+}
+
+.dashboard-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.dashboard-text h2 {
+    margin: 0;
+}
+
+.dashboard-text a {
+    text-decoration: none;
+    padding: 1rem 3rem;
+    color: #fff;
+    background: linear-gradient(115.25deg, #EF4444 18.75%, #D93285 95.01%);
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.dashboard-text a:hover {
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: #fff;
+    padding: 20px;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.info {
+    text-align: center;
+}
+
+.info p {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+.info h2 {
+    margin: 0;
+    font-size: 2rem;
+    color: #4CAF50;
+}
+
+.dashboard-rifaslist{
+    margin:10vh;
 }
 
 /* Responsividade */
@@ -237,7 +310,7 @@ header nav a:hover{
         z-index: 100;
         background-color: #fff;
     }
-    
+
 
     .home {
         padding-top: 20vh;

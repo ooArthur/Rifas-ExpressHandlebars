@@ -3,8 +3,68 @@
 <main class="painel">
     <div class="user-welcome">
         <div class="text-welcome">
-            <i class="bi bi-person-circle"></i><h3>Olá, seja bem-vindo(a) {{user.nome}}!</h3>
+            <i class="bi bi-person-circle"></i>
+            <h3>Olá, seja bem-vindo(a) {{user.nome}}!</h3>
         </div>
+    </div>
+
+    <div class="dashboard">
+        <div class="dashboard-text">
+            <h2>Dashboard</h2>
+            <a href="" class="">Criar Rifa</a>
+        </div>
+
+        <div class="dashboard-info">
+            <div class="info">
+                <p>Valor arrecadado</p>
+                <h2>R$ {{totalArrecadado}}</h2>
+            </div>
+            <div class="info">
+                <p>Rifas ativas</p>
+                <h2>{{numRifas}}</h2>
+            </div>
+            <div class="info">
+                <p>Rifas finalizadas</p>
+                <h2>0</h2>
+            </div>
+        </div>
+
+        <div class="dashboard-rifaslist">
+            {{#if rifasAtivas.length}}
+            <table class="table table-striped border">
+                <tr>
+                    <th>#</th>
+                    <th>Rifa</th>
+                    <th>Limite de números</th>
+                    <th>Preço do Bilhete</th>
+                    <th>Números vendidos</th>
+                    <th>Data de termino</th>
+                    <th class="text-center">Detalhes</th>
+                </tr>
+
+                {{#each rifasAtivas}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.nomeRifa}}</td>
+                    <td>{{this.numMaxBilhetes}}</td>
+                    <td>R$ {{this.valorBilhete}}</td>
+                    <td> faça funcionar aqui os numeros vendidos</td>
+                    <td>{{this.dataTermino}}</td>
+                    <td class="text-center ">
+                        <a href=""
+                            class="m-2 d-block link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                            Ver detalhes
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+
+            </table>
+            {{else}}
+            <p>Você não possui rifas ativas no momento.</p>
+            {{/if}}
+        </div>
+
     </div>
 
 </main>

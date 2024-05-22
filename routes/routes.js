@@ -4,7 +4,6 @@ const router = express.Router();
 const authenticateToken = require('../middleware/authMiddleware');
 const cadastroController = require('../controllers/cadastroController');
 const loginController = require('../controllers/loginController');
-const dashboardController = require('../controllers/dashboardController');
 const conn = require('../config/dbConfig');
 
 const jwt = require('jsonwebtoken');
@@ -68,7 +67,59 @@ router.get("/painel", (req, res) => {
             return;
         }
         const user = data[0];
-        res.render("painel", { user });
+
+        const userId = req.query.userId;
+
+        // Query para contar o número de rifas criadas pelo usuário
+        const queryCountRifas = `SELECT COUNT(*) AS numRifas FROM rifas WHERE userId = ?`;
+
+        // Query para calcular a arrecadação total
+        const queryTotalArrecadado = `
+            SELECT SUM(valorBilhete) AS totalArrecadado
+            FROM bilhetes
+            JOIN rifas ON bilhetes.rifaId = rifas.id
+            WHERE rifas.userId = ?
+        `;
+
+        // Query para listar as rifas ativas
+        // Query para listar as rifas ativas
+        const queryRifasAtivas = `
+            SELECT * 
+            FROM rifas 
+            WHERE userId = ? AND dataTermino > NOW()
+        `;
+
+        // Executa as queries
+        conn.query(queryCountRifas, [userId], (err, resultsRifas) => {
+            if (err) {
+                console.error('Erro ao contar rifas:', err);
+                return res.status(500).send('Erro ao obter dados do painel');
+            }
+
+            const numRifas = resultsRifas[0].numRifas || 0;
+
+            conn.query(queryTotalArrecadado, [userId], (err, resultsArrecadacao) => {
+                if (err) {
+                    console.error('Erro ao calcular arrecadação:', err);
+                    return res.status(500).send('Erro ao obter dados do painel');
+                }
+
+                const totalArrecadado = parseFloat(resultsArrecadacao[0].totalArrecadado) || 0;
+                const totalArrecadadoFormatado = totalArrecadado.toFixed(2);
+
+                // Consulta para listar as rifas ativas
+                conn.query(queryRifasAtivas, [userId], (err, resultsRifasAtivas) => {
+                    if (err) {
+                        console.error('Erro ao obter rifas ativas:', err);
+                        return res.status(500).send('Erro ao obter dados do painel');
+                    }
+
+                    const rifasAtivas = resultsRifasAtivas;
+
+                    res.render('painel', { user, numRifas, totalArrecadado: totalArrecadadoFormatado, rifasAtivas });
+                });
+            });
+        });
     });
 });
 

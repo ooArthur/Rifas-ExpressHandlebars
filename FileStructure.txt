@@ -29,4 +29,8 @@ Rifas-ExpressHandlebars
     │── layouts
     │   └── main.handlebars
     │── login.handlebars
-    └── painel.handlebars
+    │── painel.handlebars
+    └── partials
+        │── footer.handlebars
+        │── header.handlebars
+        └── headerPainel.handlebars
