@@ -8,7 +8,7 @@ const conn = require('../config/dbConfig');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const moment = require('moment'); 
+const moment = require('moment');
 
 function token(req, res) {
     const authHeader = req.headers['authorization'];
@@ -72,12 +72,16 @@ router.get("/painel", (req, res) => {
         // Query para contar o número de rifas criadas pelo usuário
         const queryCountRifas = `SELECT COUNT(*) AS numRifas FROM rifas WHERE userId = ?`;
 
-        // Query para calcular a arrecadação total
+        // Query para calcular a arrecadação total considerando apenas as rifas ativas
         const queryTotalArrecadado = `
-            SELECT SUM(valorBilhete) AS totalArrecadado
-            FROM bilhetes
-            JOIN rifas ON bilhetes.rifaId = rifas.id
-            WHERE rifas.userId = ?
+            SELECT SUM(r.valorBilhete * b.numBilhetesVendidos) AS totalArrecadado
+            FROM rifas r
+            LEFT JOIN (
+                SELECT rifaId, COUNT(*) AS numBilhetesVendidos
+                FROM bilhetes
+                GROUP BY rifaId
+            ) b ON r.id = b.rifaId
+            WHERE r.userId = ? AND r.dataTermino >= CURDATE() AND DATE_ADD(r.dataTermino, INTERVAL 1 DAY) > NOW()
         `;
 
         // Query para listar as rifas ativas e contar os números vendidos
@@ -85,7 +89,7 @@ router.get("/painel", (req, res) => {
             SELECT r.*, COUNT(b.id) AS numBilhetesVendidos
             FROM rifas r
             LEFT JOIN bilhetes b ON r.id = b.rifaId
-            WHERE r.userId = ? AND r.dataTermino > NOW()
+            WHERE r.userId = ? AND r.dataTermino >= CURDATE() AND DATE_ADD(r.dataTermino, INTERVAL 1 DAY) > NOW()
             GROUP BY r.id
         `;
 
@@ -94,7 +98,7 @@ router.get("/painel", (req, res) => {
             SELECT r.*, COUNT(b.id) AS numBilhetesVendidos
             FROM rifas r
             LEFT JOIN bilhetes b ON r.id = b.rifaId
-            WHERE r.userId = ? AND r.dataTermino <= NOW()
+            WHERE r.userId = ? AND DATE_ADD(r.dataTermino, INTERVAL 1 DAY) <= NOW()
             GROUP BY r.id
         `;
 

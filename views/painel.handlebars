@@ -32,73 +32,83 @@
         <div class="dashboard-rifaslist">
             <h3>Rifas Ativas</h3>
             {{#if rifasAtivas.length}}
-            <table class="table table-striped border">
-                <tr>
-                    <th>Rifas</th>
-                    <th>Limite de números</th>
-                    <th>Preço do Bilhete</th>
-                    <th>Números vendidos</th>
-                    <th>Data de término</th>
-                    <th class="text-center">Detalhes</th>
-                </tr>
-
-                {{#each rifasAtivas}}
-                <tr>
-                    <td>{{this.nomeRifa}}</td>
-                    <td>{{this.numMaxBilhetes}}</td>
-                    <td>R$ {{this.valorBilhete}}</td>
-                    <td>{{this.numBilhetesVendidos}}</td>
-                    <td>{{this.dataTermino}}</td>
-                    <td class="text-center">
-                        <a href=""
-                            class="m-2 d-block link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
-                            Ver detalhes
-                        </a>
-                    </td>
-                </tr>
-                {{/each}}
-
-            </table>
+            <div class="table-responsive">
+                <table class="table table-striped border">
+                    <!-- Cabeçalho da tabela -->
+                    <thead>
+                        <tr>
+                            <th>Rifas</th>
+                            <th>Limite de números</th>
+                            <th>Preço do Bilhete</th>
+                            <th>Números vendidos</th>
+                            <th>Data de término</th>
+                            <th class="text-center">Detalhes</th>
+                        </tr>
+                    </thead>
+                    <!-- Corpo da tabela -->
+                    <tbody>
+                        {{#each rifasAtivas}}
+                        <tr>
+                            <td>{{this.nomeRifa}}</td>
+                            <td>{{this.numMaxBilhetes}}</td>
+                            <td>R$ {{this.valorBilhete}}</td>
+                            <td>{{this.numBilhetesVendidos}}</td>
+                            <td>{{this.dataTermino}}</td>
+                            <td class="text-center">
+                                <a href=""
+                                    class="m-2 d-block link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                                    Ver detalhes
+                                </a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
             {{else}}
             <p>Você não possui rifas ativas no momento.</p>
             {{/if}}
 
             <h3>Rifas Finalizadas</h3>
             {{#if rifasFinalizadas.length}}
-            <table class="table table-striped border">
-                <tr>
-                    <th>Rifas</th>
-                    <th>Limite de números</th>
-                    <th>Preço do Bilhete</th>
-                    <th>Números vendidos</th>
-                    <th>Data de término</th>
-                    <th class="text-center">Detalhes</th>
-                </tr>
-
-                {{#each rifasFinalizadas}}
-                <tr>
-                    <td>{{this.nomeRifa}}</td>
-                    <td>{{this.numMaxBilhetes}}</td>
-                    <td>R$ {{this.valorBilhete}}</td>
-                    <td>{{this.numBilhetesVendidos}}</td>
-                    <td>{{this.dataTermino}}</td>
-                    <td class="text-center">
-                        <a href=""
-                            class="m-2 d-block link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
-                            Ver detalhes
-                        </a>
-                    </td>
-                </tr>
-                {{/each}}
-
-            </table>
+            <div class="table-responsive">
+                <table class="table table-striped border">
+                    <!-- Cabeçalho da tabela -->
+                    <thead>
+                        <tr>
+                            <th>Rifas</th>
+                            <th>Limite de números</th>
+                            <th>Preço do Bilhete</th>
+                            <th>Números vendidos</th>
+                            <th>Data de término</th>
+                            <th class="text-center">Detalhes</th>
+                        </tr>
+                    </thead>
+                    <!-- Corpo da tabela -->
+                    <tbody>
+                        {{#each rifasFinalizadas}}
+                        <tr>
+                            <td>{{this.nomeRifa}}</td>
+                            <td>{{this.numMaxBilhetes}}</td>
+                            <td>R$ {{this.valorBilhete}}</td>
+                            <td>{{this.numBilhetesVendidos}}</td>
+                            <td>{{this.dataTermino}}</td>
+                            <td class="text-center">
+                                <a href=""
+                                    class="m-2 d-block link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                                    Ver detalhes
+                                </a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
             {{else}}
             <p>Você não possui rifas finalizadas no momento.</p>
             {{/if}}
         </div>
-
     </div>
-
 </main>
 
 <script>

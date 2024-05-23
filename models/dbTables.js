@@ -72,25 +72,5 @@ module.exports = function criarTabelas() {
             }
             console.log('Tabela de Bilhetes criada com sucesso ou já existente.');
         });
-
-        // Crie a consulta SQL para criar a tabela de ImagensRifa se ela não existir.
-        const criarTabelaImagensRifa = `
-        CREATE TABLE IF NOT EXISTS imagensRifa (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            rifaId INT,
-            nomeArquivo VARCHAR(255),
-            dadosImagem BLOB,
-            FOREIGN KEY (rifaId) REFERENCES rifas(id)
-        );
-        `;
-        // Executa a consulta SQL para criar a tabela de ImagensRifa.
-        conn.query(criarTabelaImagensRifa, function (err) {
-            if (err) {
-                console.error('Erro ao criar tabela de ImagensRifa:', err);
-                conn.end();
-                return;
-            }
-            console.log('Tabela de ImagensRifa criada com sucesso ou já existente.');
-        });
     });
 };
