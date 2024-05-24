@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap');
 
 * {
     margin: 0;
@@ -306,6 +307,124 @@ header nav a:hover {
 .text-center {
     text-align: center;
 }
+
+.rifas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.rifas-text .title {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.rifas-text .title .icon-arrow {
+    position: absolute;
+    top: 18vh;
+    left: 10vw;
+    color: #EB3223;
+}
+
+.rifas-text .title h2 {
+    color: #EB3223;
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: bolder;
+    letter-spacing: -1px;
+}
+
+.rifas-text p {
+    font-weight: 300;
+}
+
+.criarRifaForm {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2%;
+}
+
+/* Adicionando estilos para o formulário de criar rifa */
+.form-criar-rifa {
+    width: 80%;
+    max-width: 600px;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+}
+
+.form-criar-rifa .form-group {
+    position: relative;
+    margin-bottom: 1.8rem;
+}
+
+.form-criar-rifa .form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-criar-rifa .form-group input:focus+label,
+.form-criar-rifa .form-group input.valid+label,
+.form-criar-rifa .form-group.clicked input+label {
+    top: -20px;
+    font-size: 14px;
+    color: #EF4444;
+}
+
+.form-criar-rifa .form-group label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #888;
+    transition: all 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.form-criar-rifa .submit-button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #EF4444;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1.5rem;
+}
+
+.form-criar-rifa .submit-button:hover {
+    background-color: #D93285;
+}
+
+.icon-link {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    color: #EB3223;
+}
+
+.rifas-text .title h2 {
+    color: #EB3223;
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: bold;
+    letter-spacing: -1px;
+    margin-bottom: 0.5rem;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 10px;
+}
+
 
 /* Responsividade */
 @media screen and (max-width: 768px) {

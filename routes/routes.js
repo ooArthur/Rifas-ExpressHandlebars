@@ -3,6 +3,9 @@ const router = express.Router();
 const authenticateToken = require('../middleware/authMiddleware');
 const cadastroController = require('../controllers/cadastroController');
 const loginController = require('../controllers/loginController');
+const rifaController = require('../controllers/rifaController');
+
+
 const conn = require('../config/dbConfig');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -161,5 +164,6 @@ router.get("/painel", (req, res) => {
 router.get("/criarRifa", (req, res) => {
     res.render("criaRifa")
 })
+router.post("/criarRifa/create", authenticateToken, rifaController.createRifa);
 
 module.exports = router;
