@@ -158,4 +158,8 @@ router.get("/painel", (req, res) => {
     });
 });
 
+router.get("/criarRifa", (req, res) => {
+    res.render("criaRifa")
+})
+
 module.exports = router;

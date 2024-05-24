@@ -1,0 +1,49 @@
+{{> headerPainel}}
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            alert('Acesso negado. Por favor, faça login.');
+            window.location.href = '/login';
+        } else {
+            fetch('/validaToken', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Acesso negado');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const userId = data.userId;
+                    return fetch(`/criarRifa?userId=${userId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao buscar dados do usuário');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    document.body.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Erro ao acessar o painel:', error);
+                    window.location.href = '/login';
+                });
+        }
+    });
+</script>
