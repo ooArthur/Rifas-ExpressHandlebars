@@ -47,7 +47,7 @@ header nav a:hover {
     align-items: center;
     justify-content: space-between;
     background: #fffffff8;
-    padding: 5%;
+    padding: 0 5%;
 }
 
 .home-content {
