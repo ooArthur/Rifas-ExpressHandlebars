@@ -4,10 +4,8 @@ const authenticateToken = require('../middleware/authMiddleware');
 const cadastroController = require('../controllers/cadastroController');
 const loginController = require('../controllers/loginController');
 const conn = require('../config/dbConfig');
-
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-
 const moment = require('moment');
 
 function token(req, res) {
@@ -69,8 +67,8 @@ router.get("/painel", (req, res) => {
         }
         const user = data[0];
 
-        // Query para contar o número de rifas criadas pelo usuário
-        const queryCountRifas = `SELECT COUNT(*) AS numRifas FROM rifas WHERE userId = ?`;
+        // Query para contar o número de rifas ativas criadas pelo usuário
+        const queryCountRifasAtivas = `SELECT COUNT(*) AS numRifasAtivas FROM rifas WHERE userId = ? AND dataTermino >= CURDATE()`;
 
         // Query para calcular a arrecadação total considerando apenas as rifas ativas
         const queryTotalArrecadado = `
@@ -81,35 +79,35 @@ router.get("/painel", (req, res) => {
                 FROM bilhetes
                 GROUP BY rifaId
             ) b ON r.id = b.rifaId
-            WHERE r.userId = ? AND r.dataTermino >= CURDATE() AND DATE_ADD(r.dataTermino, INTERVAL 1 DAY) > NOW()
+            WHERE r.userId = ? AND r.dataTermino >= CURDATE()
         `;
 
         // Query para listar as rifas ativas e contar os números vendidos
         const queryRifasAtivas = `
-            SELECT r.*, COUNT(b.id) AS numBilhetesVendidos
+            SELECT r.*, COALESCE(COUNT(b.id), 0) AS numBilhetesVendidos
             FROM rifas r
             LEFT JOIN bilhetes b ON r.id = b.rifaId
-            WHERE r.userId = ? AND r.dataTermino >= CURDATE() AND DATE_ADD(r.dataTermino, INTERVAL 1 DAY) > NOW()
+            WHERE r.userId = ? AND r.dataTermino >= CURDATE()
             GROUP BY r.id
         `;
 
         // Query para listar as rifas finalizadas
         const queryRifasFinalizadas = `
-            SELECT r.*, COUNT(b.id) AS numBilhetesVendidos
+            SELECT r.*, COALESCE(COUNT(b.id), 0) AS numBilhetesVendidos
             FROM rifas r
             LEFT JOIN bilhetes b ON r.id = b.rifaId
-            WHERE r.userId = ? AND DATE_ADD(r.dataTermino, INTERVAL 1 DAY) <= NOW()
+            WHERE r.userId = ? AND r.dataTermino < CURDATE()
             GROUP BY r.id
         `;
 
         // Executa as queries
-        conn.query(queryCountRifas, [userId], (err, resultsRifas) => {
+        conn.query(queryCountRifasAtivas, [userId], (err, resultsRifasAtivas) => {
             if (err) {
-                console.error('Erro ao contar rifas:', err);
+                console.error('Erro ao contar rifas ativas:', err);
                 return res.status(500).send('Erro ao obter dados do painel');
             }
 
-            const numRifas = resultsRifas[0].numRifas || 0;
+            const numRifasAtivas = resultsRifasAtivas[0].numRifasAtivas || 0;
 
             conn.query(queryTotalArrecadado, [userId], (err, resultsArrecadacao) => {
                 if (err) {
@@ -152,7 +150,7 @@ router.get("/painel", (req, res) => {
                             };
                         });
 
-                        res.render('painel', { user, numRifas, totalArrecadado: totalArrecadadoFormatado, rifasAtivas, rifasFinalizadas });
+                        res.render('painel', { user, numRifas: numRifasAtivas, totalArrecadado: totalArrecadadoFormatado, rifasAtivas, rifasFinalizadas });
                     });
                 });
             });
