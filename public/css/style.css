@@ -467,6 +467,16 @@ header nav a:hover {
     .button-logout button {
         width: 30vw;
     }
+
+    .rifas-text{
+        margin-top: 20vh;
+        text-align: center;
+    }
+
+    .icon-arrow{
+        top: 14vh !important;
+    }
+
 }
 
 @media screen and (max-width: 480px) {
@@ -511,5 +521,14 @@ header nav a:hover {
 
     .dashboard-rifaslist {
         margin: 5vh;
+    }
+
+    .rifas-text{
+        margin-top: 15vh;
+        text-align: center;
+    }
+
+    .icon-arrow{
+        top: 11vh !important;
     }
 }
