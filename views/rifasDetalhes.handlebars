@@ -1,0 +1,75 @@
+{{> headerPainel}}
+
+<main class="rifa-detalhes">
+    <div class="container">
+        <h2>Detalhes da Rifa</h2>
+        <div class="rifa-info">
+            <p><strong>Nome da Rifa:</strong> {{rifa.nomeRifa}}</p>
+            <p><strong>Descrição da Rifa:</strong> {{rifa.descricao}}</p>
+            <p><strong>Data de Início:</strong> {{rifa.dataInicio}}</p>
+            <p><strong>Data de Término:</strong> {{rifa.dataTermino}}</p>
+            <p><strong>Preço do Bilhete:</strong> R$ {{rifa.valorBilhete}}</p>
+            <p><strong>Limite de Números:</strong> {{rifa.numMaxBilhetes}}</p>
+            <p><strong>Números Vendidos:</strong> {{rifa.numBilhetesVendidos}}</p>
+            <a href="/painel">Voltar ao Painel</a>
+            <button class="delete-button" id="deleteRifaButton">Deletar Rifa</button>
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            alert('Acesso negado. Por favor, faça login.');
+            window.location.href = '/login';
+        } else {
+            fetch('/validaToken', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Acesso negado');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const userId = data.userId;
+
+                    const deleteRifaButton = document.getElementById('deleteRifaButton');
+                    deleteRifaButton.addEventListener('click', function () {
+                        if (confirm('Tem certeza de que deseja excluir esta rifa?')) {
+                            fetch(`/delete/{{rifa.id}}?userId=${userId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Authorization': `Bearer ${token}`
+                                }
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    return response.json().then(error => { throw new Error(error.error); });
+                                }
+                                return response.json();
+                            })
+                            .then(result => {
+                                alert(result.message);
+                                window.location.href = '/painel';
+                            })
+                            .catch(error => {
+                                console.error('Erro ao excluir rifa:', error);
+                                alert('Erro ao excluir rifa: ' + error.message);
+                            });
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao acessar o painel:', error);
+                    window.location.href = '/login';
+                });
+        }
+    });
+</script>
