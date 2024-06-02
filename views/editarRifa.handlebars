@@ -3,7 +3,7 @@
 <section class="rifas">
     <div class="rifas-text">
         <div class="title">
-            <a href="/painel" class="icon-link"><img src="/images/ChevronLeft.svg" alt="" class="icon-arrow"></a>
+            <a href="/detalhes/{{rifa.id}}" class="icon-link"><img src="/images/ChevronLeft.svg" alt="" class="icon-arrow"></a>
             <h2>Editar Rifa</h2>
         </div>
         <p>Altere as informações desejadas e edite a sua rifa agora mesmo!</p>
@@ -25,7 +25,7 @@
                 <label for="valorBilhete">Valor do Bilhete</label>
             </div>
             <div class="form-group clicked">
-                <input type="number" max="10000" class="input-field" id="quantidadeBilhetes" name="qtdBilhete"
+                <input type="number" max="1000" class="input-field" id="quantidadeBilhetes" name="qtdBilhete"
                     value="{{rifa.numMaxBilhetes}}">
                 <label for="quantidadeBilhetes">Quantidade de bilhetes</label>
             </div>

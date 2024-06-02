@@ -5,6 +5,7 @@ const app = express();
 require('dotenv').config();
 const porta = process.env.PORT;
 const conn = require('./config/dbConfig');
+const Handlebars = require('./handlebarsHelpers');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

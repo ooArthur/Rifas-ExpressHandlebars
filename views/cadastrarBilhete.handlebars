@@ -1,40 +1,31 @@
 {{> headerPainel}}
 
-<section class="rifas">
-    <div class="rifas-text">
-        <div class="title">
-            <a href="/painel" class="icon-link"><img src="/images/ChevronLeft.svg" alt="" class="icon-arrow"></a>
-            <h2>Criar Rifa</h2>
+<section class="comprar-bilhete">
+    <div class="invisivel">
+        <div class="comprar-bilhete-text">
+            <div class="title">
+                <h2>Cadastrar participante</h2>
+            </div>
+            <p>Preencha as informações do Comprador.</p>
         </div>
-        <p>Preencha as informações desejadas e crie a sua rifa agora mesmo!</p>
+        <div class="comprarBilheteForm">
+            <form action="" class="form-comprar-bilhete" id="comprarBilheteForm">
+                <input type="hidden" name="rifaId" value="{{rifaId}}">
+                <input type="hidden" name="bilheteNum" value="{{bilheteNum}}">
+                <div class="form-group">
+                    <input type="text" class="input-field" id="compradorNome" name="compradorNome" required>
+                    <label for="compradorNome">Nome do Comprador</label>
+                </div>
+                <div class="btns-bilhetes">
+                    <a href="/detalhes/{{rifaId}}" class="btn btn-secondary">Voltar</a>
+                    <button type="submit" class="submit-button btn btn-success">Cadastrar Bilhete</button>
+                </div>
+
+                <div id="errorMessage" class="error-message"></div>
+            </form>
+        </div>
     </div>
-    <div class="criarRifaForm">
-        <form action="" class="form-criar-rifa" id="criarRifaForm">
-            <div class="form-group">
-                <input type="text" class="input-field" id="tituloRifa" name="tituloRifa">
-                <label for="tituloRifa">Titulo da Rifa</label>
-            </div>
-            <div class="form-group">
-                <input type="text" class="input-field" id="descricaoRifa" name="descricaoRifa">
-                <label for="descricaoRifa">Descrição da Rifa</label>
-            </div>
-            <div class="form-group">
-                <input type="number" step="0.010" class="input-field" id="valorBilhete" name="valorBilhete">
-                <label for="valorBilhete">Valor do Bilhete</label>
-            </div>
-            <div class="form-group">
-                <input type="number" max="1000" class="input-field" id="quantidadeBilhetes" name="qtdBilhete">
-                <label for="quantidadeBilhetes">Quantidade de bilhetes</label>
-            </div>
-            <div class="form-group clicked">
-                <input type="date" class="input-field" id="dataTermino" name="dataTermino">
-                <label for="dataTermino">Data de término</label>
-            </div>
-            <!-- Elemento para exibir mensagens de erro -->
-            <button type="submit" class="submit-button">Criar Rifa</button>
-            <div id="errorMessage" class="error-message"></div>
-        </form>
-    </div>
+
 </section>
 
 <script>
@@ -60,19 +51,17 @@
                 .then(data => {
                     const userId = data.userId;
 
-                    document.getElementById('criarRifaForm').addEventListener('submit', function (event) {
+                    document.getElementById('comprarBilheteForm').addEventListener('submit', function (event) {
                         event.preventDefault();
 
                         const formData = new FormData(event.target);
                         const data = {
-                            tituloRifa: formData.get('tituloRifa'),
-                            descricaoRifa: formData.get('descricaoRifa'),
-                            valorBilhete: formData.get('valorBilhete'),
-                            qtdBilhete: formData.get('qtdBilhete'),
-                            dataTermino: formData.get('dataTermino')
+                            rifaId: formData.get('rifaId'),
+                            bilheteNum: formData.get('bilheteNum'),
+                            compradorNome: formData.get('compradorNome')
                         };
 
-                        fetch(`/criarRifa/create?userId=${userId}`, {
+                        fetch('/cadastrarBilhete', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -88,12 +77,12 @@
                             })
                             .then(result => {
                                 alert(result.message);
-                                window.location.href = '/painel';
+                                window.location.href = `/detalhes/${data.rifaId}`;
                             })
                             .catch(error => {
-                                console.error('Erro ao criar rifa:', error);
+                                console.error('Erro ao cadastrar bilhete:', error);
                                 const errorMessage = document.getElementById('errorMessage');
-                                errorMessage.textContent = 'Erro ao criar rifa: ' + error.message;
+                                errorMessage.textContent = 'Erro ao cadastrar bilhete: ' + error.message;
                             });
                     });
 
@@ -111,7 +100,7 @@
                     });
                 })
                 .catch(error => {
-                    console.error('Erro ao acessar o painel:', error);
+                    console.error('Erro ao acessar a página:', error);
                     window.location.href = '/login';
                 });
         }

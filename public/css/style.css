@@ -269,17 +269,17 @@ header nav a:hover {
 }
 
 .dashboard-text a:hover {
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.4);
 }
 
 .dashboard-info {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background: #fff;
+    background: #ffffff;
     padding: 20px;
     border-radius: 1rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 3);
     width: 100%;
 }
 
@@ -290,7 +290,7 @@ header nav a:hover {
 .info p {
     margin: 0;
     font-size: 1rem;
-    color: #666;
+    color: #000000;
 }
 
 .info h2 {
@@ -425,6 +425,98 @@ header nav a:hover {
     margin-bottom: 10px;
 }
 
+.rifa-detalhes {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 10%;
+}
+
+.container-info {
+    width: 100%;
+}
+
+.detalhes-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5vh;
+    width: 100%;
+}
+
+.rifa-info p {
+    font-size: 1.2rem;
+}
+
+.strong-descricao {
+    font-size: 1.2rem;
+}
+
+.rifaDetalhes-bilheteslist {
+    margin-top: 10vh;
+    padding: 0 10%;
+}
+
+.cards-numDisponiveis {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.nonedecoration {
+    color: black;
+    text-decoration: none;
+}
+
+.card-num {
+    color: red;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 1vw;
+    text-decoration: none;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.comprar-bilhete {
+    width: 100%;
+    margin-top: 20vh;
+}
+
+.comprar-bilhete-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.comprar-bilhete-text .title {
+    display: flex;
+}
+
+.comprar-bilhete-text .title h2 {
+    color: #EB3223;
+    font-family: "M PLUS Rounded 1c", sans-serif;
+}
+
+.form-comprar-bilhete {
+    width: 40%;
+}
+
+.btns-bilhetes{
+    margin-top: 5vh;
+    text-align: center;
+}
+
+.comprarBilheteForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 
 /* Responsividade */
 @media screen and (max-width: 768px) {
@@ -468,13 +560,49 @@ header nav a:hover {
         width: 30vw;
     }
 
-    .rifas-text{
+    .rifas-text {
         margin-top: 20vh;
         text-align: center;
     }
 
-    .icon-arrow{
+    .icon-arrow {
         top: 14vh !important;
+    }
+
+    .rifa-detalhes {
+        padding-top: 15vh;
+    }
+
+    .detalhes-text {
+        flex-direction: column;
+        margin-bottom: 9vh;
+    }
+
+    .rifaDetalhes-bilheteslist {
+        width: 100%;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cards-numDisponiveis {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .comprar-bilhete{
+        margin-top: 0;
+        padding-top: 25vh;
+    }
+
+    .form-comprar-bilhete{
+        width: 80%;
+    }
+
+    .form-group{
+        margin-top: 2vh;
     }
 
 }
@@ -523,12 +651,13 @@ header nav a:hover {
         margin: 5vh;
     }
 
-    .rifas-text{
+    .rifas-text {
         margin-top: 15vh;
         text-align: center;
     }
 
-    .icon-arrow{
+    .icon-arrow {
         top: 11vh !important;
     }
+
 }

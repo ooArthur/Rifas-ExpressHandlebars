@@ -1,22 +1,72 @@
 {{> headerPainel}}
 
 <main class="rifa-detalhes">
-    <div class="container">
-        <h2>Detalhes da Rifa</h2>
+    <div class="container-info">
+        <div class="detalhes-text">
+            <h2>Informações da sua Rifa</h2>
+            <div class="btns-detalhes">
+                <button class="btn btn-warning" id="editRifaButton">Editar Rifa</button>
+                <button class="btn btn-danger" id="deleteRifaButton">Deletar Rifa</button>
+            </div>
+        </div>
         <div class="rifa-info">
-            <p><strong>Nome da Rifa:</strong> {{rifa.nomeRifa}}</p>
-            <p><strong>Descrição da Rifa:</strong> {{rifa.descricao}}</p>
+            <p><strong>Rifa:</strong> {{rifa.nomeRifa}}</p>
+            <div class="descricao-rifa">
+                <strong class="strong-descricao">Descrição da Rifa:</strong>
+                <p>{{rifa.descricao}}</p>
+            </div>
             <p><strong>Data de Início:</strong> {{rifa.dataInicio}}</p>
             <p><strong>Data de Término:</strong> {{rifa.dataTermino}}</p>
             <p><strong>Preço do Bilhete:</strong> R$ {{rifa.valorBilhete}}</p>
             <p><strong>Limite de Números:</strong> {{rifa.numMaxBilhetes}}</p>
             <p><strong>Números Vendidos:</strong> {{rifa.numBilhetesVendidos}}</p>
             <a href="/painel" class="btn btn-secondary">Voltar ao Painel</a>
-            <button class="btn btn-warning" id="editRifaButton">Editar Rifa</button>
-            <button class="btn btn-danger" id="deleteRifaButton">Deletar Rifa</button>
         </div>
     </div>
 </main>
+
+<section class="rifaDetalhes-bilheteslist">
+    <h3>Bilhetes Vendidos</h3>
+    {{#if bilhetes.length}}
+    <div class="table-responsive tableAlign">
+        <table class="table table-striped border mb-5">
+            <thead>
+                <tr>
+                    <th>Número do Bilhete</th>
+                    <th>Comprador</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each bilhetes}}
+                <tr>
+                    <td>{{this.numeroBilhete}}</td>
+                    <td>{{this.compradorNome}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{else}}
+    <p>Você não vendeu nenhum bilhete até o momento.</p>
+    {{/if}}
+
+    <h3>Bilhetes Disponíveis</h3>
+    {{#if rifa.numMaxBilhetes}}
+    <div class="cards-numDisponiveis">
+        {{#each (range 1 rifa.numMaxBilhetes)}}
+        {{#if (isAvailable this ../bilhetes)}}
+        <a href="/cadastrarBilhete/{{../rifa.id}}/{{this}}" class="nonedecoration">
+            <div class="card-num">
+                <h4>{{this}}</h4>
+            </div>
+        </a>
+        {{/if}}
+        {{/each}}
+    </div>
+    {{else}}
+    <p>Todos os bilhetes foram vendidos.</p>
+    {{/if}}
+</section>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -32,51 +82,51 @@
                     'Authorization': `Bearer ${token}`
                 }
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Acesso negado');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const userId = data.userId;
-                    const rifaId = {{rifa.id}}; // Assume que você tem acesso ao ID da rifa aqui.
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Acesso negado');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const userId = data.userId;
+                const rifaId = {{ rifa.id }};
 
-                    const editRifaButton = document.getElementById('editRifaButton');
-                    editRifaButton.addEventListener('click', function () {
-                        window.location.href = `/editarRifa/${rifaId}?userId=${userId}`;
-                    });
-
-                    const deleteRifaButton = document.getElementById('deleteRifaButton');
-                    deleteRifaButton.addEventListener('click', function () {
-                        if (confirm('Tem certeza de que deseja excluir esta rifa?')) {
-                            fetch(`/delete/${rifaId}?userId=${userId}`, {
-                                method: 'POST',
-                                headers: {
-                                    'Authorization': `Bearer ${token}`
-                                }
-                            })
-                            .then(response => {
-                                if (!response.ok) {
-                                    return response.json().then(error => { throw new Error(error.error); });
-                                }
-                                return response.json();
-                            })
-                            .then(result => {
-                                alert(result.message);
-                                window.location.href = '/painel';
-                            })
-                            .catch(error => {
-                                console.error('Erro ao excluir rifa:', error);
-                                alert('Erro ao excluir rifa: ' + error.message);
-                            });
-                        }
-                    });
-                })
-                .catch(error => {
-                    console.error('Erro ao acessar o painel:', error);
-                    window.location.href = '/login';
+                const editRifaButton = document.getElementById('editRifaButton');
+                editRifaButton.addEventListener('click', function () {
+                    window.location.href = `/editarRifa/${rifaId}?userId=${userId}`;
                 });
+
+                const deleteRifaButton = document.getElementById('deleteRifaButton');
+                deleteRifaButton.addEventListener('click', function () {
+                    if (confirm('Tem certeza de que deseja excluir esta rifa?')) {
+                        fetch(`/delete/${rifaId}?userId=${userId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.json().then(error => { throw new Error(error.error); });
+                            }
+                            return response.json();
+                        })
+                        .then(result => {
+                            alert(result.message);
+                            window.location.href = '/painel';
+                        })
+                        .catch(error => {
+                            console.error('Erro ao excluir rifa:', error);
+                            alert('Erro ao excluir rifa: ' + error.message);
+                        });
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao acessar o painel:', error);
+                window.location.href = '/login';
+            });
         }
     });
 </script>

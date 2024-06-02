@@ -4,6 +4,7 @@ const authenticateToken = require('../middleware/authMiddleware');
 const cadastroController = require('../controllers/cadastroController');
 const loginController = require('../controllers/loginController');
 const rifaController = require('../controllers/rifaController');
+const bilheteController = require('../controllers/bilheteController');
 
 
 const conn = require('../config/dbConfig');
@@ -173,6 +174,13 @@ router.get("/detalhes/:id", (req, res) => {
         GROUP BY r.id
     `;
 
+    const queryBilhetesVendidos = `
+        SELECT numeroBilhete, compradorNome 
+        FROM bilhetes 
+        WHERE rifaId = ? 
+        ORDER BY numeroBilhete ASC
+    `;
+
     conn.query(queryRifaDetalhes, [rifaId], (err, results) => {
         if (err) {
             console.error('Erro ao obter detalhes da rifa:', err);
@@ -187,9 +195,17 @@ router.get("/detalhes/:id", (req, res) => {
         rifa.dataInicio = moment(rifa.dataInicio).format('DD/MM/YYYY');
         rifa.dataTermino = moment(rifa.dataTermino).format('DD/MM/YYYY');
 
-        res.render('rifasDetalhes', { rifa });
+        conn.query(queryBilhetesVendidos, [rifaId], (err, bilhetes) => {
+            if (err) {
+                console.error('Erro ao obter bilhetes vendidos:', err);
+                return res.status(500).send('Erro ao obter bilhetes vendidos');
+            }
+
+            res.render('rifasDetalhes', { rifa, bilhetes });
+        });
     });
 });
+
 router.post("/delete/:id", authenticateToken, rifaController.deleteRifa);
 
 router.get("/editarRifa/:id", (req, res) => {
@@ -218,8 +234,14 @@ router.get("/editarRifa/:id", (req, res) => {
         res.render('editarRifa', { rifa });
     });
 });
-
 router.post("/editarRifa/edit/:id", authenticateToken, rifaController.updateRifa);
 
+router.get("/cadastrarBilhete/:rifaId/:bilheteNum", (req, res) => {
+    const rifaId = req.params.rifaId;
+    const bilheteNum = req.params.bilheteNum;
+    
+    res.render("cadastrarBilhete", { rifaId, bilheteNum });
+});
+router.post("/cadastrarBilhete", authenticateToken, bilheteController.compraBilhete);
 
 module.exports = router;

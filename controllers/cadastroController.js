@@ -26,7 +26,7 @@ module.exports = {
             const sql = 'INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)';
             await conn.promise().query(sql, [nome, email, hashedPassword]);
 
-            res.status(201).json({ message: "Usuário criado com sucesso" });
+            res.status(201).json({ message: "Conta criada com sucesso" });
         } catch (error) {
             console.error('Erro ao criar usuário:', error);
             res.status(500).json({ error: "Erro ao criar usuário" });
