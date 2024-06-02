@@ -1,0 +1,123 @@
+{{> headerPainel}}
+
+<section class="rifas">
+    <div class="rifas-text">
+        <div class="title">
+            <a href="/painel" class="icon-link"><img src="/images/ChevronLeft.svg" alt="" class="icon-arrow"></a>
+            <h2>Editar Rifa</h2>
+        </div>
+        <p>Altere as informações desejadas e edite a sua rifa agora mesmo!</p>
+    </div>
+    <div class="criarRifaForm">
+        <form action="" class="form-criar-rifa" id="criarRifaForm">
+            <div class="form-group clicked">
+                <input type="text" class="input-field" id="tituloRifa" name="tituloRifa" value="{{rifa.nomeRifa}}">
+                <label for="tituloRifa">Titulo da Rifa</label>
+            </div>
+            <div class="form-group clicked">
+                <input type="text" class="input-field" id="descricaoRifa" name="descricaoRifa"
+                    value="{{rifa.descricao}}">
+                <label for="descricaoRifa">Descrição da Rifa</label>
+            </div>
+            <div class="form-group clicked">
+                <input type="number" step="0.010" class="input-field" id="valorBilhete" name="valorBilhete"
+                    value="{{rifa.valorBilhete}}">
+                <label for="valorBilhete">Valor do Bilhete</label>
+            </div>
+            <div class="form-group clicked">
+                <input type="number" max="10000" class="input-field" id="quantidadeBilhetes" name="qtdBilhete"
+                    value="{{rifa.numMaxBilhetes}}">
+                <label for="quantidadeBilhetes">Quantidade de bilhetes</label>
+            </div>
+            <div class="form-group clicked">
+                <input type="date" class="input-field" id="dataTermino" name="dataTermino" value="{{rifa.dataTermino}}">
+                <label for="dataTermino">Data de término</label>
+            </div>
+            <button type="submit" class="submit-button">Editar Rifa</button>
+            <div id="errorMessage" class="error-message"></div>
+        </form>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('criarRifaForm');
+        const token = localStorage.getItem('token');
+        const rifaId = '{{rifa.id}}';  // Passando o id da rifa do servidor para o cliente
+
+        // Função para validar o token
+        function validarToken(token) {
+            return fetch('/validaToken', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Token inválido');
+                    }
+                    return response.json();
+                })
+                .then(data => data.userId)
+                .catch(error => {
+                    console.error('Erro ao validar token:', error);
+                    throw error;
+                });
+        }
+
+        if (!token) {
+            alert('Acesso negado. Por favor, faça login.');
+            window.location.href = '/login';
+        } else {
+            validarToken(token)
+                .then(userId => {
+                    form.addEventListener('submit', function (event) {
+                        event.preventDefault();
+
+                        const tituloRifa = document.getElementById('tituloRifa').value;
+                        const descricaoRifa = document.getElementById('descricaoRifa').value;
+                        const valorBilhete = document.getElementById('valorBilhete').value;
+                        const qtdBilhete = document.getElementById('quantidadeBilhetes').value;
+                        const dataTermino = document.getElementById('dataTermino').value;
+
+                        const data = {
+                            tituloRifa,
+                            descricaoRifa,
+                            valorBilhete,
+                            qtdBilhete,
+                            dataTermino
+                        };
+
+                        fetch(`/editarRifa/edit/${rifaId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify(data)
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    return response.text().then(text => { throw new Error(text); });
+                                }
+                                return response.json();
+                            })
+                            .then(result => {
+                                alert(result.message);
+                                window.location.href = '/painel';
+                            })
+                            .catch(error => {
+                                console.error('Erro ao editar rifa:', error);
+                                document.getElementById('errorMessage').textContent = 'Erro ao editar rifa: ' + error.message;
+                            });
+                    });
+                })
+                .catch(error => {
+                    alert('Acesso negado. Por favor, faça login.');
+                    window.location.href = '/login';
+                });
+        }
+    });
+
+</script>

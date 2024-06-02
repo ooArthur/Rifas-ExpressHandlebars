@@ -11,8 +11,9 @@
             <p><strong>Preço do Bilhete:</strong> R$ {{rifa.valorBilhete}}</p>
             <p><strong>Limite de Números:</strong> {{rifa.numMaxBilhetes}}</p>
             <p><strong>Números Vendidos:</strong> {{rifa.numBilhetesVendidos}}</p>
-            <a href="/painel">Voltar ao Painel</a>
-            <button class="delete-button" id="deleteRifaButton">Deletar Rifa</button>
+            <a href="/painel" class="btn btn-secondary">Voltar ao Painel</a>
+            <button class="btn btn-warning" id="editRifaButton">Editar Rifa</button>
+            <button class="btn btn-danger" id="deleteRifaButton">Deletar Rifa</button>
         </div>
     </div>
 </main>
@@ -39,11 +40,17 @@
                 })
                 .then(data => {
                     const userId = data.userId;
+                    const rifaId = {{rifa.id}}; // Assume que você tem acesso ao ID da rifa aqui.
+
+                    const editRifaButton = document.getElementById('editRifaButton');
+                    editRifaButton.addEventListener('click', function () {
+                        window.location.href = `/editarRifa/${rifaId}?userId=${userId}`;
+                    });
 
                     const deleteRifaButton = document.getElementById('deleteRifaButton');
                     deleteRifaButton.addEventListener('click', function () {
                         if (confirm('Tem certeza de que deseja excluir esta rifa?')) {
-                            fetch(`/delete/{{rifa.id}}?userId=${userId}`, {
+                            fetch(`/delete/${rifaId}?userId=${userId}`, {
                                 method: 'POST',
                                 headers: {
                                     'Authorization': `Bearer ${token}`

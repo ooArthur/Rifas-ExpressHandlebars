@@ -33,18 +33,13 @@ module.exports = {
     async updateRifa(req, res) {
         const { id } = req.params;
         const { tituloRifa, descricaoRifa, valorBilhete, qtdBilhete, dataTermino } = req.body;
-        const { userId } = req.query;
-
-        // Verifique se o userId está presente
-        if (!userId) {
-            return res.status(400).json({ error: "Usuário não autenticado" });
-        }
-
+        const userId = req.user.userId;  // Obter o userId do middleware de autenticação
+    
         // Verifique se algum campo está vazio
         if (!tituloRifa || !descricaoRifa || !valorBilhete || !qtdBilhete || !dataTermino) {
             return res.status(400).json({ error: "Por favor, preencha todos os campos" });
         }
-
+    
         try {
             // Atualize a rifa no banco de dados
             const sql = `
@@ -53,18 +48,18 @@ module.exports = {
                 WHERE id = ? AND userId = ?
             `;
             const [result] = await conn.promise().query(sql, [tituloRifa, descricaoRifa, valorBilhete, qtdBilhete, dataTermino, id, userId]);
-
+    
             if (result.affectedRows === 0) {
                 return res.status(404).json({ error: "Rifa não encontrada ou você não tem permissão para atualizá-la" });
             }
-
+    
             res.status(200).json({ message: "Rifa atualizada com sucesso" });
         } catch (error) {
             console.error('Erro ao atualizar rifa:', error);
             res.status(500).json({ error: "Erro ao atualizar rifa" });
         }
     },
-
+     
     async deleteRifa(req, res) {
         const { id } = req.params;
         const { userId } = req.query;

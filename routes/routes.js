@@ -164,19 +164,16 @@ router.post("/criarRifa/create", authenticateToken, rifaController.createRifa);
 
 router.get("/detalhes/:id", (req, res) => {
     const rifaId = req.params.id;
-    const userId  = req.query.userId;
-
-    console.log("ID do Usuario:", userId)
 
     const queryRifaDetalhes = `
         SELECT r.*, COUNT(b.id) AS numBilhetesVendidos 
         FROM rifas r
         LEFT JOIN bilhetes b ON r.id = b.rifaId
-        WHERE r.id = ? AND r.userId = ?
+        WHERE r.id = ?
         GROUP BY r.id
     `;
 
-    conn.query(queryRifaDetalhes, [rifaId, userId], (err, results) => {
+    conn.query(queryRifaDetalhes, [rifaId], (err, results) => {
         if (err) {
             console.error('Erro ao obter detalhes da rifa:', err);
             return res.status(500).send('Erro ao obter detalhes da rifa');
@@ -193,7 +190,36 @@ router.get("/detalhes/:id", (req, res) => {
         res.render('rifasDetalhes', { rifa });
     });
 });
+router.post("/delete/:id", authenticateToken, rifaController.deleteRifa);
 
-router.post("/delete/:id", authenticateToken, rifaController.deleteRifa)
+router.get("/editarRifa/:id", (req, res) => {
+    const rifaId = req.params.id;
+
+    const queryRifaDetalhes = `
+        SELECT r.*
+        FROM rifas r
+        WHERE r.id = ?
+    `;
+
+    conn.query(queryRifaDetalhes, [rifaId], (err, results) => {
+        if (err) {
+            console.error('Erro ao obter detalhes da rifa:', err);
+            return res.status(500).send('Erro ao obter detalhes da rifa');
+        }
+
+        if (results.length === 0) {
+            return res.status(404).send('Rifa não encontrada.');
+        }
+
+        const rifa = results[0];
+        rifa.dataInicio = moment(rifa.dataInicio).format('DD/MM/YYYY');
+        rifa.dataTermino = moment(rifa.dataTermino).format('DD/MM/YYYY');
+
+        res.render('editarRifa', { rifa });
+    });
+});
+
+router.post("/editarRifa/edit/:id", authenticateToken, rifaController.updateRifa);
+
 
 module.exports = router;
