@@ -51,7 +51,9 @@
     {{/if}}
 
     <h3>Bilhetes Disponíveis</h3>
-    {{#if rifa.numMaxBilhetes}}
+    {{#if (eq rifa.numBilhetesVendidos rifa.numMaxBilhetes)}}
+    <p>Todos os bilhetes foram vendidos.</p>
+    {{else}}
     <div class="cards-numDisponiveis">
         {{#each (range 1 rifa.numMaxBilhetes)}}
         {{#if (isAvailable this ../bilhetes)}}
@@ -63,8 +65,6 @@
         {{/if}}
         {{/each}}
     </div>
-    {{else}}
-    <p>Todos os bilhetes foram vendidos.</p>
     {{/if}}
 </section>
 
