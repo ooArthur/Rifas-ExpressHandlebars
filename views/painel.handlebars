@@ -10,7 +10,7 @@
 
     <div class="dashboard">
         <div class="dashboard-text">
-            <h2>Dashboard</h2>
+            <h2 class="defaultitletext">Dashboard</h2>
             <a href="/criarRifa">Criar Rifa</a>
         </div>
 
@@ -30,7 +30,7 @@
         </div>
 
         <div class="dashboard-rifaslist">
-            <h3>Rifas Ativas</h3>
+            <h3 class="defaultitletext">Rifas Ativas</h3>
             {{#if rifasAtivas.length}}
             <div class="table-responsive">
                 <table class="table table-striped border mb-5">
@@ -70,7 +70,7 @@
             <p>Você não possui rifas ativas no momento.</p>
             {{/if}}
 
-            <h3>Rifas Finalizadas</h3>
+            <h3 class="defaultitletext">Rifas Finalizadas</h3>
             {{#if rifasFinalizadas.length}}
             <div class="table-responsive">
                 <table class="table table-striped border">

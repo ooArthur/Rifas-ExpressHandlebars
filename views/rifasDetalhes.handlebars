@@ -3,7 +3,7 @@
 <main class="rifa-detalhes">
     <div class="container-info">
         <div class="detalhes-text">
-            <h2>Informações da sua Rifa</h2>
+            <h2 class="defaultitletext">Informações da sua Rifa</h2>
             <div class="btns-detalhes">
                 <button class="btn btn-warning" id="editRifaButton">Editar Rifa</button>
                 <button class="btn btn-danger" id="deleteRifaButton">Deletar Rifa</button>
@@ -26,7 +26,7 @@
 </main>
 
 <section class="rifaDetalhes-bilheteslist">
-    <h3>Bilhetes Vendidos</h3>
+    <h3 class="defaultitletext">Bilhetes Vendidos</h3>
     {{#if bilhetes.length}}
     <div class="table-responsive tableAlign">
         <table class="table table-striped border mb-5">
@@ -50,7 +50,7 @@
     <p>Você não vendeu nenhum bilhete até o momento.</p>
     {{/if}}
 
-    <h3>Bilhetes Disponíveis</h3>
+    <h3 class="defaultitletext">Bilhetes Disponíveis</h3>
     {{#if (eq rifa.numBilhetesVendidos rifa.numMaxBilhetes)}}
     <p>Todos os bilhetes foram vendidos.</p>
     {{else}}

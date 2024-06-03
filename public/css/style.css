@@ -505,7 +505,7 @@ header nav a:hover {
     width: 40%;
 }
 
-.btns-bilhetes{
+.btns-bilhetes {
     margin-top: 5vh;
     text-align: center;
 }
@@ -515,6 +515,12 @@ header nav a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.defaultitletext {
+    color: #EB3223;
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 800;
 }
 
 
@@ -575,7 +581,8 @@ header nav a:hover {
 
     .detalhes-text {
         flex-direction: column;
-        margin-bottom: 9vh;
+        align-items: start;
+        margin-bottom: 2vh;
     }
 
     .rifaDetalhes-bilheteslist {
@@ -585,6 +592,7 @@ header nav a:hover {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        margin-top: 5vh;
     }
 
     .cards-numDisponiveis {
@@ -592,16 +600,16 @@ header nav a:hover {
         justify-content: center;
     }
 
-    .comprar-bilhete{
+    .comprar-bilhete {
         margin-top: 0;
         padding-top: 25vh;
     }
 
-    .form-comprar-bilhete{
+    .form-comprar-bilhete {
         width: 80%;
     }
 
-    .form-group{
+    .form-group {
         margin-top: 2vh;
     }
 
