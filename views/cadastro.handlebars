@@ -82,17 +82,31 @@
         formGroups.forEach(formGroup => {
             const input = formGroup.querySelector('input');
 
+            // Adicionar a classe 'clicked' ao clicar no input
             input.addEventListener('click', function () {
                 formGroup.classList.add('clicked');
             });
 
+            // Remover a classe 'clicked' ao perder o foco se o input estiver vazio
             input.addEventListener('blur', function () {
                 if (this.value.trim() === '') {
                     formGroup.classList.remove('clicked');
                 }
             });
+
+            // Adicionar ou remover a classe 'clicked' ao digitar
+            input.addEventListener('input', function () {
+                if (this.value.trim() !== '') {
+                    formGroup.classList.add('clicked');
+                } else {
+                    formGroup.classList.remove('clicked');
+                }
+            });
+
+            // Adicionar a classe 'clicked' se o input já tiver um valor ao carregar a página
+            if (input.value.trim() !== '') {
+                formGroup.classList.add('clicked');
+            }
         });
     });
-
-
 </script>

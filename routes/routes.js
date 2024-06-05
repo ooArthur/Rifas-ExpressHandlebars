@@ -242,6 +242,6 @@ router.get("/cadastrarBilhete/:rifaId/:bilheteNum", (req, res) => {
     
     res.render("cadastrarBilhete", { rifaId, bilheteNum });
 });
-router.post("/cadastrarBilhete", authenticateToken, bilheteController.compraBilhete);
+router.post("/cadastrarBilhete", authenticateToken, bilheteController.cadastrarBilhete);
 
 module.exports = router;

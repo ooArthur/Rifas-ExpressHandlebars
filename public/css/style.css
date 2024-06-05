@@ -158,6 +158,10 @@ header nav a:hover {
     color: #EF4444;
 }
 
+.form-control:focus{
+    box-shadow: none !important;
+}
+
 .form-group label {
     position: absolute;
     top: 10px;
@@ -337,7 +341,7 @@ header nav a:hover {
 }
 
 .rifas-text p {
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .criarRifaForm {
@@ -482,7 +486,7 @@ header nav a:hover {
 
 .comprar-bilhete {
     width: 100%;
-    margin-top: 20vh;
+    margin-top: 10vh;
 }
 
 .comprar-bilhete-text {
@@ -490,6 +494,7 @@ header nav a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 5vh;
 }
 
 .comprar-bilhete-text .title {
@@ -506,7 +511,7 @@ header nav a:hover {
 }
 
 .btns-bilhetes {
-    margin-top: 5vh;
+    margin-top: 10vh;
     text-align: center;
 }
 

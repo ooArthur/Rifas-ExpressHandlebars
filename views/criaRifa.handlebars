@@ -12,27 +12,27 @@
         <form action="" class="form-criar-rifa" id="criarRifaForm">
             <div class="form-group">
                 <input type="text" class="input-field" id="tituloRifa" name="tituloRifa">
-                <label for="tituloRifa">Titulo da Rifa</label>
+                <label for="tituloRifa" class="input-label">Titulo da Rifa</label>
             </div>
             <div class="form-group">
                 <input type="text" class="input-field" id="descricaoRifa" name="descricaoRifa">
-                <label for="descricaoRifa">Descrição da Rifa</label>
+                <label for="descricaoRifa" class="input-label">Descrição da Rifa</label>
             </div>
             <div class="form-group">
                 <input type="number" step="0.010" class="input-field" id="valorBilhete" name="valorBilhete">
-                <label for="valorBilhete">Valor do Bilhete</label>
+                <label for="valorBilhete" class="input-label">Valor do Bilhete</label>
             </div>
             <div class="form-group">
                 <input type="number" max="1000" class="input-field" id="quantidadeBilhetes" name="qtdBilhete">
-                <label for="quantidadeBilhetes">Quantidade de bilhetes</label>
+                <label for="quantidadeBilhetes" class="input-label">Quantidade de bilhetes</label>
             </div>
             <div class="form-group clicked">
                 <input type="date" class="input-field" id="dataTermino" name="dataTermino">
-                <label for="dataTermino">Data de término</label>
+                <label for="dataTermino" class="input-label">Data de término</label>
             </div>
             <!-- Elemento para exibir mensagens de erro -->
             <button type="submit" class="submit-button">Criar Rifa</button>
-            <div id="errorMessage" class="error-message"></div>
+            <div id="errorMessage" class="error-message2"></div>
         </form>
     </div>
 </section>
@@ -100,11 +100,11 @@
                     const formGroups = document.querySelectorAll('.form-group');
                     formGroups.forEach(formGroup => {
                         const input = formGroup.querySelector('input');
-                        input.addEventListener('click', function () {
-                            formGroup.classList.add('clicked');
-                        });
-                        input.addEventListener('blur', function () {
-                            if (this.value.trim() === '') {
+
+                        input.addEventListener('input', function () {
+                            if (this.value.trim() !== '') {
+                                formGroup.classList.add('clicked');
+                            } else {
                                 formGroup.classList.remove('clicked');
                             }
                         });

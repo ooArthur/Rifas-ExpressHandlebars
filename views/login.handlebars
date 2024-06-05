@@ -6,14 +6,14 @@
         <form id="loginForm">
             <div class="formcadastro-control">
                 <div class="form-group">
-                    <input type="email" class="form-control" id="email">
-                    <label for="email">Endereço de Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                    <label for="email" class="input-label">Endereço de Email</label>
                 </div>
             </div>
             <div class="formcadastro-control">
                 <div class="form-group">
-                    <input type="password" class="form-control" name="senha" id="senha">
-                    <label for="senha">Senha</label>
+                    <input type="password" class="form-control" name="senha" id="senha" required>
+                    <label for="senha" class="input-label">Senha</label>
                 </div>
             </div>
             <button type="submit">Login</button>
@@ -33,9 +33,10 @@
         // Para cada elemento 'form-group' encontrado, adiciona eventos ao seu input
         formGroups.forEach(formGroup => {
             const input = formGroup.querySelector('input');
+            const label = formGroup.querySelector('label');
 
             // Adiciona uma classe 'clicked' ao 'form-group' quando o input é clicado
-            input.addEventListener('click', function () {
+            input.addEventListener('focus', function () {
                 formGroup.classList.add('clicked');
             });
 
@@ -43,6 +44,24 @@
             input.addEventListener('blur', function () {
                 if (this.value.trim() === '') {
                     formGroup.classList.remove('clicked');
+                }
+            });
+
+            // Adiciona uma classe 'filled' ao 'form-group' se o input tem valor preenchido
+            input.addEventListener('input', function () {
+                if (this.value.trim() !== '') {
+                    formGroup.classList.add('filled');
+                } else {
+                    formGroup.classList.remove('filled');
+                }
+            });
+
+            // Mantém a label acima do input mesmo quando preenchido
+            input.addEventListener('change', function () {
+                if (this.value.trim() !== '') {
+                    formGroup.classList.add('filled');
+                } else {
+                    formGroup.classList.remove('filled');
                 }
             });
         });

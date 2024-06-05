@@ -1,31 +1,27 @@
 {{> headerPainel}}
 
 <section class="comprar-bilhete">
-    <div class="invisivel">
-        <div class="comprar-bilhete-text">
-            <div class="title">
-                <h2>Cadastrar participante</h2>
-            </div>
-            <p>Preencha as informações do Comprador.</p>
+    <div class="comprar-bilhete-text">
+        <div class="title">
+            <h2>Cadastrar participante</h2>
         </div>
-        <div class="comprarBilheteForm">
-            <form action="" class="form-comprar-bilhete" id="comprarBilheteForm">
-                <input type="hidden" name="rifaId" value="{{rifaId}}">
-                <input type="hidden" name="bilheteNum" value="{{bilheteNum}}">
-                <div class="form-group">
-                    <input type="text" class="input-field" id="compradorNome" name="compradorNome" required>
-                    <label for="compradorNome">Nome do Comprador</label>
-                </div>
-                <div class="btns-bilhetes">
-                    <a href="/detalhes/{{rifaId}}" class="btn btn-secondary">Voltar</a>
-                    <button type="submit" class="submit-button btn btn-success">Cadastrar Bilhete</button>
-                </div>
-
-                <div id="errorMessage" class="error-message"></div>
-            </form>
-        </div>
+        <p>Preencha as informações do Comprador.</p>
     </div>
-
+    <div class="comprarBilheteForm">
+        <form action="" class="form-comprar-bilhete" id="comprarBilheteForm">
+            <input type="hidden" name="rifaId" value="{{rifaId}}">
+            <input type="hidden" name="bilheteNum" value="{{bilheteNum}}">
+            <div class="form-group">
+                <input type="text" class="input-field" id="compradorNome" name="compradorNome" required>
+                <label for="compradorNome" class="input-label">Nome do Comprador</label>
+            </div>
+            <div id="errorMessage" class="error-message"></div>
+            <div class="btns-bilhetes">
+                <a href="/detalhes/{{rifaId}}" class="btn btn-secondary">Voltar</a>
+                <button type="submit" class="submit-button btn btn-success">Cadastrar Bilhete</button>
+            </div>
+        </form>
+    </div>
 </section>
 
 <script>
@@ -89,11 +85,11 @@
                     const formGroups = document.querySelectorAll('.form-group');
                     formGroups.forEach(formGroup => {
                         const input = formGroup.querySelector('input');
-                        input.addEventListener('click', function () {
-                            formGroup.classList.add('clicked');
-                        });
-                        input.addEventListener('blur', function () {
-                            if (this.value.trim() === '') {
+
+                        input.addEventListener('input', function () {
+                            if (this.value.trim() !== '') {
+                                formGroup.classList.add('clicked');
+                            } else {
                                 formGroup.classList.remove('clicked');
                             }
                         });

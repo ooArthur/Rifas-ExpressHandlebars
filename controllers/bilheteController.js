@@ -1,12 +1,12 @@
 const conn = require('../config/dbConfig');
 
 module.exports = {
-    async compraBilhete(req, res) {
+    async cadastrarBilhete(req, res) {
         const { rifaId, bilheteNum, compradorNome } = req.body;
         const userId = req.user.userId; // ID do usuário autenticado
 
         // Consulta para obter o ID do usuário que criou a rifa
-        const queryGetRifaUserId = 'SELECT userId FROM rifas WHERE id = ?';
+        const queryGetRifaUserId = 'SELECT userId, numMaxBilhetes FROM rifas WHERE id = ?';
         conn.query(queryGetRifaUserId, [rifaId], (err, results) => {
             if (err) {
                 console.error('Erro ao obter o ID do usuário da rifa:', err);
@@ -16,6 +16,12 @@ module.exports = {
             // Verifique se a rifa existe e se o ID do usuário autenticado é o mesmo que criou a rifa
             if (results.length === 0 || results[0].userId !== userId) {
                 return res.status(403).json({ error: 'Você não tem permissão para cadastrar um bilhete nesta rifa' });
+            }
+
+            // Verifique se o número do bilhete é válido
+            const numMaxBilhetes = results[0].numMaxBilhetes;
+            if (bilheteNum > numMaxBilhetes || bilheteNum < 1) {
+                return res.status(400).json({ error: 'Número do bilhete inválido' });
             }
 
             // Verifique se o bilhete ainda está disponível e insira-o no banco de dados
