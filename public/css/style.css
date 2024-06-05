@@ -487,6 +487,7 @@ header nav a:hover {
 .comprar-bilhete {
     width: 100%;
     margin-top: 10vh;
+    height: 50vh;
 }
 
 .comprar-bilhete-text {
@@ -528,6 +529,48 @@ header nav a:hover {
     font-weight: 800;
 }
 
+.footer {
+    margin-top: 10vh;
+    background: #EB3223; /* Fundo vermelho */
+    color: #FFFFFF; /* Fonte branca */
+    padding: 20px 0; /* Adiciona um espaçamento interno ao footer */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-logo img {
+    height: 50px;
+    width: auto;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.footer-links ul li {
+    margin-right: 20px;
+}
+
+.footer-links ul li a {
+    color: #FFFFFF; /* Fonte branca */
+    text-decoration: none;
+    transition: 0.4s;
+}
+.footer-links ul li a:hover {
+    color: #ffffffb5; /* Fonte branca */
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    text-align: center;
+}
 
 /* Responsividade */
 @media screen and (max-width: 768px) {
@@ -618,6 +661,16 @@ header nav a:hover {
         margin-top: 2vh;
     }
 
+    .footer{
+        margin-top: 25vh;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
 }
 
 @media screen and (max-width: 480px) {
@@ -671,6 +724,10 @@ header nav a:hover {
 
     .icon-arrow {
         top: 11vh !important;
+    }
+
+    .footer{
+        margin-top: 20vh;
     }
 
 }
