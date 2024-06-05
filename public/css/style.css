@@ -120,7 +120,7 @@ header nav a:hover {
 }
 
 .cadastro-container .formcadastro-control {
-    margin-bottom: 1.8rem;
+    margin-bottom: 2rem;
 }
 
 .cadastro-container .formcadastro-control label {
@@ -662,7 +662,7 @@ header nav a:hover {
     }
 
     .footer{
-        margin-top: 25vh;
+        margin-top: 30vh;
     }
     
     .footer-content {
