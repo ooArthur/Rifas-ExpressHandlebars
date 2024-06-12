@@ -27,8 +27,8 @@ Rifas-ExpressHandlebars
 │── routes
 │   └── routes.js
 └── views
+    │── cadastrarBilhete.handlebars
     │── cadastro.handlebars
-    │── comprarBilhete.handlebars
     │── criaRifa.handlebars
     │── editarRifa.handlebars
     │── home.handlebars
