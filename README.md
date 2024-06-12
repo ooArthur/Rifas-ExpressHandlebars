@@ -51,45 +51,56 @@ Este projeto é uma atividade do curso técnico onde desenvolvemos uma aplicaç�
 
 Página Home:
 ```html
-    GET http://localhost:3000/
+GET http://localhost:3000/
 ```
-
 Página Cadastro de Usuarios:
 ```html
-    GET http://localhost:3000/cadastro
-    POST http://localhost:3000/cadastro/criar-usuario
+GET http://localhost:3000/cadastro
+```
+```html
+POST http://localhost:3000/cadastro/criar-usuario
 ```
 Página Login de Usuarios:
 ```html
-    GET http://localhost:3000/login
-    POST http://localhost:3000/login/authUser
+GET http://localhost:3000/login
+```
+```html
+POST http://localhost:3000/login/authUser
 ```
 Página Painel:
 ```html
-    GET http://localhost:3000/login
+GET http://localhost:3000/login
 ```
 Página Criar Rifa:
 ```html
-    GET http://localhost:3000/criarRifa
-    POST http://localhost:3000/criarRifa/create
+GET http://localhost:3000/criarRifa
+```
+```html
+POST http://localhost:3000/criarRifa/create
 ```
 
 Página Detalhes das Rifas:
 ```html
-    GET http://localhost:3000/detalhes/:id
-    POST http://localhost:3000/delete/:id
+GET http://localhost:3000/detalhes/:id
+```
+```html
+POST http://localhost:3000/delete/:id
 ```
 
 Página Editar Rifa:
 ```html
-    GET http://localhost:3000/editarRifa/:id
-    POST http://localhost:3000/editarRifa/edit/:id
+GET http://localhost:3000/editarRifa/:id
+```
+```html
+POST http://localhost:3000/editarRifa/edit/:id
 ```
 
 Página Cadastrar Bilhete:
 ```html
-    GET http://localhost:3000/cadastrarBilhete/:rifaId/:bilheteNum
-    POST http://localhost:3000/cadastrarBilhete
+GET http://localhost:3000/cadastrarBilhete/:rifaId/:bilheteNum
+```
+```html
+POST http://localhost:3000/cadastrarBilhete
 ```
 
 ### Middleware de Autenticação
