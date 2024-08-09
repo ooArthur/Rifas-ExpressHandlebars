@@ -567,6 +567,15 @@ header nav a:hover {
     color: #ffffffb5; /* Fonte branca */
 }
 
+.pagsobre{
+    padding: 3vw;
+}
+
+.pagsobre h2{
+    color: red;
+    margin-bottom: 4vh;
+}
+
 .footer-bottom {
     margin-top: 20px;
     text-align: center;
@@ -670,7 +679,9 @@ header nav a:hover {
         align-items: center;
         justify-content: center;
     }
-
+    .pagsobre{
+        padding-top: 25vh;
+    }
 }
 
 @media screen and (max-width: 480px) {

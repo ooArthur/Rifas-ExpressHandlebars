@@ -244,4 +244,8 @@ router.get("/cadastrarBilhete/:rifaId/:bilheteNum", (req, res) => {
 });
 router.post("/cadastrarBilhete", authenticateToken, bilheteController.cadastrarBilhete);
 
+router.get("/sobre", (req, res) => {
+    res.render("sobre")
+})
+
 module.exports = router;
